@@ -1,0 +1,42 @@
+
+
+.space-title{
+    margin-top: 14%;
+}
+.space-steps{
+    margin-top: 3%;
+}
+.space-ingrediets{
+    float:right;
+  margin-right: 5%; 
+  margin-top: -2%; 
+}
+.space-single-recipe{
+    margin-left:5%;
+    margin-top: 15%;
+}
+.contact-form-space{
+    margin-top: 13%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+.thanks-text-space{
+    text-align: center;margin-top:25%;margin-right:50%;
+}
+.all-recipes-space{
+    margin-left:5%;
+    margin-top: 15%;
+}
+#msg{
+    margin: 10%;
+}
+@media (max-width: 877px){
+    .space-steps{
+        margin-top: 50%;
+    }
+    .contact-form-space-mobile{
+        margin-top: 13%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+}

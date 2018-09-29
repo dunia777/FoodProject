@@ -1,0 +1,34 @@
+
+.card{
+    border: solid;
+   
+    margin-top: 3%;
+    height: 235px;
+
+    width: 33%;
+    /* height: auto; */
+    float: left; 
+    max-width: 235px;
+    margin-right: 1%;
+    border-width: 1px;
+    border-color: gray;
+  
+  
+}
+.text-block {
+    /* position: relative; */
+    /* bottom: 20px;
+    right: 20px; */
+    background-color: white;
+    color: black;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+@media (max-width: 877px){
+    .card{
+        width: 100%;
+    }
+}

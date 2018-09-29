@@ -1,0 +1,12 @@
+
+
+
+.menu-headers-text{
+    font-family: sans-serif;
+    font-size: 1.5em;
+}
+@media (max-width: 730px){
+    .menu-headers-text{ 
+    font-size: 130%;
+    }
+}

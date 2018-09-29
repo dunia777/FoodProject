@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style/index.css" type="text/css">
+
+  <title>Sweet Tooth</title>
+  <link rel="shortcut icon" href="menu-img.png" type="image/x-icon" />
+</head>
+
+<body>
+
+  <nav>
+    <ul class="bazooka-back">
+      <li><img class="menu-img" alt="menu-cupcack" src="images/menu-img.png"><img class="sweetooth" src="images/sweet-tooth.png"></li>
+      <li><a class="menu-headers-text" href="/"><b>Home</b></a></li>
+      <li><a class="menu-headers-text" href="recipes.html"><b>Recipes</b></a></li>
+
+      <li><a class="menu-headers-text" href="youarechef.html"><b>You are the chef</b></a></li>
+      <li><a class="menu-headers-text" href="contact.html"><b>Contact us</b></a></li>
+    </ul>
+  </nav>
+
+
+  <div id="news" class="all-recipes-space">
+    <h2 id="msg"></h2>
+  </div>
+
+  <script type="text/javascript">
+
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8081/get_recipes');
+    xhr.addEventListener('load', function (result) {
+
+      let response = xhr.response;
+      response = JSON.parse(response);
+
+      if (response.length == 0) {
+
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:8081/insert_doc');
+        xhr.addEventListener('load', function (result) {
+
+          let response = xhr.response;
+         // response = JSON.parse(response);
+         console.log(response);
+        });
+        xhr.send();
+        window.location.reload();
+        msg = document.getElementById("msg");
+        msg.innerHTML = ("<b>Oops..!<br>No recipes yet... Be the first to add one and click <a class='go-to-yourechef' href='/youarechef.html'>here</a></b>");
+      } else {
+        msg = document.getElementById("msg");
+        msg.innerHTML = "";
+        for (var i = 0; i < response.length; i++) {
+          var res = response[i];
+
+          var div = document.createElement("div");
+          div.classList.add("card");
+          div.style.backgroundImage = "url('" + res.photo_link + "')";
+          div.style.backgroundPosition = "center";
+          div.style.backgroundRepeat = "no-repeat";
+          div.style.backgroundSize = "cover";
+          div.id = String(res._id);
+
+          news.appendChild(div);
+
+          var block = document.createElement("div");
+          block.classList.add("text-block");
+
+          div.appendChild(block);
+
+          var h3 = document.createElement("h4");
+          h3.innerHTML = res.name;
+          block.appendChild(h3);
+          var likes = document.createElement("p");
+          likes.innerHTML = res.likes + " Likes";
+          likes.classList.add("likes");
+          block.appendChild(likes);
+
+        }
+
+        var classname = document.querySelectorAll(".card");
+        for (var i = 0; i < classname.length; i++) {
+          console.log(classname[i].id);
+          classname[i].addEventListener('click', go.bind(this, classname[i].id), false);
+        }
+      }
+    });
+
+    xhr.send();
+
+
+    function go(id) {
+      window.location = ("/single_recipe.html?id=" + id);
+    }
+
+
+
+  </script>
+
+
+</body>
+
+</html>

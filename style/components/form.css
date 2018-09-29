@@ -1,0 +1,15 @@
+.form-group{
+    margin: 3%;
+}
+form label{
+    width: 100%;
+}
+form input{
+ width: 100%;
+ height: 25px;
+
+}
+form textarea{
+    width:100%;
+    height: 150px;
+}

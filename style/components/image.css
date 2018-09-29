@@ -1,0 +1,39 @@
+.menu-img{
+    width: 5%;
+}
+.sweetooth{
+    width: 10%;
+    margin-left: -2%;
+    margin-bottom: -1%;
+}
+.main-page-img{
+    width: 100%;
+}
+.img-single_recipe{
+    width:40%;
+}
+.img-list{
+     width: 100%;
+    height: auto;
+    float: left; 
+    max-width: 235px;
+    max-height: 235px;
+    alt:"Pineapple";
+    width:"300";
+    height:"300";
+}
+.like-icon{
+    width:3%;
+}
+
+@media (max-width: 877px){
+    .menu-img, .sweetooth{
+        width: 100%;
+    }
+    .img-single_recipe{
+        width:100%;
+    }
+    .like-icon{
+        width:10%;
+    }
+}

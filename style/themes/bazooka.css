@@ -1,0 +1,29 @@
+.bazooka-back{
+    background-color: pink;
+}
+a{
+    color: aliceblue;
+    text-decoration: none;
+}
+footer{
+    background-color: lightblue;
+}
+nav{
+    background-color: pink;
+}
+.likes{
+    color: blue;
+}
+.thanks-a{
+    background-color: lightblue;
+    color:darkblue;
+}
+.go-to-yourechef{
+    color:darkblue;
+}
+
+@media (max-width: 877px){
+    nav{ 
+background-color: transparent;
+}
+}

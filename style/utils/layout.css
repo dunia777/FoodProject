@@ -1,0 +1,40 @@
+.First-Page {
+    display: grid;
+    grid-template-areas:
+        "header header "
+       
+        "main  aside"
+        "main  aside"
+        "footer footer ";
+    grid-template-rows: 20% 1fr;
+    grid-template-columns: 50% 1fr;
+    /* grid-gap: var(--space); */
+    grid-row-gap:   var(--space);
+
+}
+
+.Page-header    { grid-area: header; }
+.Page-main      { grid-area: main; padding-left: 14%;}
+.Page-aside     { grid-area: aside; padding-right: 14%; }
+.Page-footer     { grid-area: footer;  }
+
+.right-pos{
+    float: right;
+}
+.left-pos{
+    float: left;
+}
+
+@media (max-width: 877px){
+    .First-Page {
+        display: block;
+    }
+    .Page-main {
+        padding-left: 0%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    .contact-mobile{
+      width: 100%;
+    }
+}

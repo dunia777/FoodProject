@@ -1,0 +1,21 @@
+html, body{
+    height: 100%;
+ 
+}
+.thanks-page{
+    background-image: url(/./././images/forest.jpg);
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+.index-page{
+    background-image: url(/./././images/index_background.jpg);
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+@media (max-width: 877px){
+   body{
+        margin-left: 30%;
+   }
+}

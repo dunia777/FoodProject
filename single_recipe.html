@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style/index.css" type="text/css">
+
+    <title>Sweet Tooth</title>
+    <link rel="shortcut icon" href="menu-img.png" type="image/x-icon" />
+</head>
+
+<body>
+
+        <nav   >
+                <ul class="bazooka-back" >
+                    <li><img class="menu-img" alt="menu-cupcack" src="images/menu-img.png"><img class="sweetooth" src="images/sweet-tooth.png"></li>
+                  <li><a class="menu-headers-text" href="/"><b>Home</b></a></li>
+                  <li><a class="menu-headers-text" href="recipes.html"><b>Recipes</b></a></li>
+                  <li><a class="menu-headers-text" href="youarechef.html"><b>You are the chef</b></a></li>
+                  <li><a class="menu-headers-text" href="contact.html"><b>Contact us</b></a></li>
+                </ul>
+              </nav>
+
+    <div class="space-single-recipe">
+
+        <div class="space-title" >
+              
+            <h3 id="recipe_name"></h3>
+            <p id="likes"></p>
+            <img class="like-icon" onclick="like()" src="images/like.png">
+        </div>
+            <img class="img-single_recipe" src="" id="recipe_photo">
+            <div class="space-ingrediets">
+                <h2>Ingredients</h2>
+                <h4 id="ingredients"></h4>
+            </div>
+
+        
+
+        <div class="space-steps" >
+            <h2  >Steps</h2>
+            <p id="steps"></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var id = url.searchParams.get("id");
+        console.log(id);
+
+        function like(){
+            let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://127.0.0.1:8081/like?id=' + id);
+        xhr.addEventListener('load', function (result) {
+
+          window.location.reload();
+        });
+         xhr.send();
+        }
+
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://127.0.0.1:8081/get_recipe_by_id?id=' + id);
+        xhr.addEventListener('load', function (result) {
+            let response = xhr.response;
+            response = JSON.parse(response);
+            console.log(response);
+            for (i = 0; i < response.length; i++) {
+                res = response[i];
+                document.getElementById('recipe_name').innerHTML = (res.name);
+                document.getElementById('likes').innerHTML = (res.likes+" Likes");
+                let ingredients = res.ingredients.split(",");
+                for (j = 0; j < ingredients.length; j++) {
+                    var para = document.createElement("P");                       
+                    var t = document.createTextNode(ingredients[j]);      
+                    para.appendChild(t);                                         
+                    document.getElementById("ingredients").appendChild(para);         
+                }
+                let steps=res.steps.split(".");
+                for (j = 0; j < steps.length; j++) {
+                    var para = document.createElement("P");                      
+                    var t = document.createTextNode(steps[j]);    
+                    para.appendChild(t);                                          
+                    document.getElementById("steps").appendChild(para);          
+                }
+               
+                document.getElementById('recipe_photo').src = res.photo_link;
+            }
+        });
+        xhr.send();
+
+    </script>
+
+
+</body>
+
+</html>

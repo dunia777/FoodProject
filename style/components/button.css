@@ -1,0 +1,10 @@
+.btn-form{
+    width: 20%;
+
+}
+@media (max-width: 877px){
+    .btn-form{
+        width: 33%;
+    
+    }
+}
