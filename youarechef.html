@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style/index.css" type="text/css">
     
     <title>Sweet Tooth</title>
-    <link rel="shortcut icon" href="menu-img.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/menu-img.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -32,21 +32,21 @@
               
                 <div class="form-group">
 
-                    <input type="text" name="user[recipe_name]" placeholder="Recipe's name">
+                    <input type="text" required name="user[recipe_name]" placeholder="Recipe's name">
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="user[ingredients]" placeholder="Ingredients (seperated by ',')" >
+                    <input type="text" required name="user[ingredients]" placeholder="Ingredients (seperated by ',')" >
                 </div>
                                
                 
                 <div class="form-group">
 
-                    <textarea name="user[steps]" placeholder="Enter you recipe (each step seperated by '.')"></textarea>
+                    <textarea required name="user[steps]" placeholder="Enter you recipe (each step seperated by '.')"></textarea>
                 </div>
                 <div class="form-group">
 
-                    <input type="text" name="user[photo]" placeholder="Photo link">
+                    <input required type="text" name="user[photo]" placeholder="Photo link">
                 </div>
                 <div class="form-group">
                     <button class="btn-form" type="submit">Send</button>
@@ -60,7 +60,7 @@
 
     </div>
 
-F
+
 
 </body>
 

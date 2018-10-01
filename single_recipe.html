@@ -8,88 +8,160 @@
     <link rel="stylesheet" href="style/index.css" type="text/css">
 
     <title>Sweet Tooth</title>
-    <link rel="shortcut icon" href="menu-img.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/menu-img.png" type="image/x-icon" />
 </head>
 
 <body>
 
-        <nav   >
-                <ul class="bazooka-back" >
-                    <li><img class="menu-img" alt="menu-cupcack" src="images/menu-img.png"><img class="sweetooth" src="images/sweet-tooth.png"></li>
-                  <li><a class="menu-headers-text" href="/"><b>Home</b></a></li>
-                  <li><a class="menu-headers-text" href="recipes.html"><b>Recipes</b></a></li>
-                  <li><a class="menu-headers-text" href="youarechef.html"><b>You are the chef</b></a></li>
-                  <li><a class="menu-headers-text" href="contact.html"><b>Contact us</b></a></li>
-                </ul>
-              </nav>
+    <nav>
+        <ul class="bazooka-back">
+            <li><img class="menu-img" alt="menu-cupcack" src="images/menu-img.png"><img class="sweetooth" src="images/sweet-tooth.png"></li>
+            <li><a class="menu-headers-text" href="/"><b>Home</b></a></li>
+            <li><a class="menu-headers-text" href="recipes.html"><b>Recipes</b></a></li>
+            <li><a class="menu-headers-text" href="youarechef.html"><b>You are the chef</b></a></li>
+            <li><a class="menu-headers-text" href="contact.html"><b>Contact us</b></a></li>
+        </ul>
+    </nav>
 
     <div class="space-single-recipe">
 
-        <div class="space-title" >
-              
+        <div class="space-title">
+
             <h3 id="recipe_name"></h3>
             <p id="likes"></p>
             <img class="like-icon" onclick="like()" src="images/like.png">
         </div>
-            <img class="img-single_recipe" src="" id="recipe_photo">
-            <div class="space-ingrediets">
-                <h2>Ingredients</h2>
-                <h4 id="ingredients"></h4>
-            </div>
+        <img class="img-single_recipe" src="" id="recipe_photo">
+        <div class="space-ingrediets">
+            <h2>Ingredients</h2>
+            <h4 id="ingredients"></h4>
+        </div>
 
-        
 
-        <div class="space-steps" >
-            <h2  >Steps</h2>
+
+        <div class="space-steps">
+            <h2>Steps</h2>
             <p id="steps"></p>
         </div>
     </div>
+    <div id="suggestions"><p><b>Suggested For You..</b></p></div>
+
+
+
     <script type="text/javascript">
+        getSuggestions();
+
+
+        /*get id parameter from url*/
         var url_string = window.location.href;
         var url = new URL(url_string);
         var id = url.searchParams.get("id");
-        console.log(id);
-
-        function like(){
-            let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://127.0.0.1:8081/like?id=' + id);
-        xhr.addEventListener('load', function (result) {
-
-          window.location.reload();
-        });
-         xhr.send();
-        }
+        //console.log(id);
 
 
+
+        /*ajax call to get the recipe's info (using recipe's id)*/
         let xhr = new XMLHttpRequest();
         xhr.open('GET', 'http://127.0.0.1:8081/get_recipe_by_id?id=' + id);
         xhr.addEventListener('load', function (result) {
             let response = xhr.response;
             response = JSON.parse(response);
             console.log(response);
+            /*go through the response and display it*/
             for (i = 0; i < response.length; i++) {
                 res = response[i];
                 document.getElementById('recipe_name').innerHTML = (res.name);
-                document.getElementById('likes').innerHTML = (res.likes+" Likes");
+                document.getElementById('likes').innerHTML = (res.likes + " Likes");
                 let ingredients = res.ingredients.split(",");
                 for (j = 0; j < ingredients.length; j++) {
-                    var para = document.createElement("P");                       
-                    var t = document.createTextNode(ingredients[j]);      
-                    para.appendChild(t);                                         
-                    document.getElementById("ingredients").appendChild(para);         
+                    var para = document.createElement("P");
+                    var t = document.createTextNode(ingredients[j]);
+                    para.appendChild(t);
+                    document.getElementById("ingredients").appendChild(para);
                 }
-                let steps=res.steps.split(".");
+                let steps = res.steps.split(".");
                 for (j = 0; j < steps.length; j++) {
-                    var para = document.createElement("P");                      
-                    var t = document.createTextNode(steps[j]);    
-                    para.appendChild(t);                                          
-                    document.getElementById("steps").appendChild(para);          
+                    var para = document.createElement("P");
+                    var t = document.createTextNode(steps[j]);
+                    para.appendChild(t);
+                    document.getElementById("steps").appendChild(para);
                 }
-               
+
                 document.getElementById('recipe_photo').src = res.photo_link;
             }
         });
         xhr.send();
+
+
+        /*this function fetches 5 new recipes to suggest to the user and display them at the bottom of the page-in case it is not a mobile*/
+        function getSuggestions() {
+            /*ajax call to get 5 recipes*/
+            let xhrS = new XMLHttpRequest();
+            xhrS.open('GET', 'http://127.0.0.1:8081/get_suggestions');
+            xhrS.addEventListener('load', function (result) {
+
+                let responseS = xhrS.response;
+                //  console.log(String(responseS));
+                responseS = JSON.parse(responseS);
+
+                /* for each recipe get info and display in a card shaped box*/
+                for (var i = 0; i < responseS.length; i++) {
+                    var res = responseS[i];
+
+                    var div = document.createElement("div");
+                    div.classList.add("suggestion-card");
+                    div.style.backgroundImage = "url('" + res.photo_link + "')";
+                    div.style.backgroundPosition = "center";
+                    div.style.backgroundRepeat = "no-repeat";
+                    div.style.backgroundSize = "cover";
+                    div.id = String(res._id);
+
+                    suggestions = document.getElementById("suggestions");
+                    suggestions.appendChild(div);
+
+                    var block = document.createElement("div");
+                    block.classList.add("text-block");
+
+                    div.appendChild(block);
+
+                    var h3 = document.createElement("h4");
+                    h3.innerHTML = res.name;
+                    block.appendChild(h3);
+                    var likes = document.createElement("p");
+                    likes.innerHTML = res.likes + " Likes";
+                    likes.classList.add("likes");
+                    block.appendChild(likes);
+
+                }
+                /*bind each recipe card with a function to redirect when clicking on it to the recipe's page*/
+                var classname = document.querySelectorAll(".suggestion-card");
+                for (var i = 0; i < classname.length; i++) {
+                    console.log(classname[i].id);
+                    classname[i].addEventListener('click', go.bind(this, classname[i].id), false);
+                }
+            });
+            xhrS.send();
+        }
+
+        /*when the like button is clicked, this function gets activated*/
+        function like() {
+            /*ajax call to increase recipe's likes count*/
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://127.0.0.1:8081/like?id=' + id);
+            xhr.addEventListener('load', function (result) {
+                let response = xhr.response;
+                response = JSON.parse(response);
+                console.log("Likes: " + (response.value.likes));
+
+                document.getElementById('likes').innerHTML = (response.value.likes + 1 + " Likes");
+
+            });
+            xhr.send();
+        }
+
+        function go(id) {
+            window.location = ("/single_recipe.html?id=" + id);
+        }
 
     </script>
 

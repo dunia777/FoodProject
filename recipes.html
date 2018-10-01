@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style/index.css" type="text/css">
 
   <title>Sweet Tooth</title>
-  <link rel="shortcut icon" href="menu-img.png" type="image/x-icon" />
+  <link rel="shortcut icon" href="images/menu-img.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -30,8 +30,13 @@
   </div>
 
   <script type="text/javascript">
+getRecipes();
 
 
+/*this function fetches all recipes from DB and displays them */
+function getRecipes(){
+
+    /* ajax call to get recipes from DB*/
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://127.0.0.1:8081/get_recipes');
     xhr.addEventListener('load', function (result) {
@@ -39,27 +44,34 @@
       let response = xhr.response;
       response = JSON.parse(response);
 
+      /*if there are no recipes in the DB yet, insert all recipes from JSON file*/
       if (response.length == 0) {
-
-
+        /*first, display a suitable message (will be deleted later)*/
+         msg = document.getElementById("msg");
+        msg.innerHTML = ("<b>Oops..!<br>No recipes yet... Be the first to add one and click <a class='go-to-yourechef' href='/youarechef.html'>here</a></b>");
+        
+        /*ajax call to insert recipes from JSON document*/
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://127.0.0.1:8081/insert_doc');
         xhr.addEventListener('load', function (result) {
 
           let response = xhr.response;
-         // response = JSON.parse(response);
-         console.log(response);
+          console.log(response);
+         
         });
         xhr.send();
+        /*reload the page*/
         window.location.reload();
-        msg = document.getElementById("msg");
-        msg.innerHTML = ("<b>Oops..!<br>No recipes yet... Be the first to add one and click <a class='go-to-yourechef' href='/youarechef.html'>here</a></b>");
-      } else {
+       
+      } else { /* if DB is not empty*/
+        /*delete message of empty DB, if existed*/
         msg = document.getElementById("msg");
         msg.innerHTML = "";
+        /*loop over all resulted recipes*/
         for (var i = 0; i < response.length; i++) {
           var res = response[i];
 
+          /*for each recipe create a card with the image in the back ground and some info in the card*/
           var div = document.createElement("div");
           div.classList.add("card");
           div.style.backgroundImage = "url('" + res.photo_link + "')";
@@ -84,7 +96,7 @@
           block.appendChild(likes);
 
         }
-
+        /*for each recipe card, bind the reipe with an onlick event function that will redirect to the recipe page*/
         var classname = document.querySelectorAll(".card");
         for (var i = 0; i < classname.length; i++) {
           console.log(classname[i].id);
@@ -95,7 +107,9 @@
 
     xhr.send();
 
+  }
 
+  /*this function redirects users to the the desired recipe page*/
     function go(id) {
       window.location = ("/single_recipe.html?id=" + id);
     }

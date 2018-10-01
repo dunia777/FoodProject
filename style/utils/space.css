@@ -9,11 +9,12 @@
 .space-ingrediets{
     float:right;
   margin-right: 5%; 
-  margin-top: -2%; 
+  margin-top:-14%; /* -2%; */
 }
 .space-single-recipe{
     margin-left:5%;
     margin-top: 15%;
+    margin-bottom: 10%;
 }
 .contact-form-space{
     margin-top: 13%;
@@ -38,5 +39,10 @@
         margin-top: 13%;
         margin-left: 3%;
         margin-right: 3%;
+    }
+    .space-ingrediets{
+        float:right;
+      margin-right: 5%; 
+      margin-top:-2%; /* -2%; */
     }
 }
